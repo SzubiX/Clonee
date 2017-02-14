@@ -24,7 +24,7 @@ class ReportsController < ApplicationController
   # POST /reports
   # POST /reports.json
   def create
-    @report = Report.new(report_params)
+    @report = Report.new(student_params)
 
     respond_to do |format|
       if @report.save
@@ -41,7 +41,7 @@ class ReportsController < ApplicationController
   # PATCH/PUT /reports/1.json
   def update
     respond_to do |format|
-      if @report.update(report_params)
+      if @report.update(teacher_params)
         format.html { redirect_to @report, notice: 'Report was successfully updated.' }
         format.json { render :show, status: :ok, location: @report }
       else
@@ -68,7 +68,12 @@ class ReportsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def report_params
-      params.require(:report).permit(:first_name, :last_name, :email, :content, :comment, :grade)
+
+    def student_params
+      params.require(:report).permit(:first_name, :last_name, :email, :content)
+    end
+
+    def teacher_params
+      params.require(:report).permit(:comment, :grade)
     end
 end
